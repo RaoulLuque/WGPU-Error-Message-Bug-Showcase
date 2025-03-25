@@ -1,0 +1,10 @@
+unittests:*
+webgpu:api,operation,command_buffer,basic:*
+webgpu:api,operation,compute,basic:*
+webgpu:api,operation,rendering,basic:clear:*
+webgpu:api,operation,rendering,basic:fullscreen_quad:*
+//FAIL: webgpu:api,operation,rendering,basic:large_draw:*
+webgpu:api,operation,rendering,blending:*
+webgpu:api,operation,rendering,blending:GPUBlendComponent:*
+webgpu:api,operation,rendering,depth:*
+webgpu:api,operation,rendering,draw:*

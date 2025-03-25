@@ -1,0 +1,19 @@
+# None of our tests should take longer than 45s, and if they've gone 2x that,
+# terminate them to prevent infinite run-on.
+[profile.default]
+slow-timeout = { period = "45s", terminate-after = 2 }
+
+# Use two threads for tests with "2 threads" in their name
+[[profile.default.overrides]]
+filter = 'test(~2_threads) | test(~2 threads)'
+threads-required = 2
+
+# Use four threads for tests with "4 threads" in their name
+[[profile.default.overrides]]
+filter = 'test(~4_threads) | test(~4 threads)'
+threads-required = 4
+
+# Use eight threads for tests with "8 threads" in their name
+[[profile.default.overrides]]
+filter = 'test(~8_threads) | test(~8 threads)'
+threads-required = 8
