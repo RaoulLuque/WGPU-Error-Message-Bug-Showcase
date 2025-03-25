@@ -35,4 +35,54 @@ fn collatz_iterations(n_base: u32) -> u32{
 @workgroup_size(1)
 fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
     v_indices[global_id.x] = collatz_iterations(v_indices[global_id.x]);
+
+    // Uncomment the following code to see the bug [1]
+//    let test_bool = true;
+//    var value_that_gets_assigned_wrong_type: array<u32, 16>;
+//    if test_bool {
+//        value_that_gets_assigned_wrong_type = v_indices[0];
+//    }
+
+//    This shows the following error:
+//    thread 'main' panicked at wgpu/src/backend/wgpu_core.rs:1009:30:
+//    wgpu error: Validation Error
+//
+//    Caused by:
+//      In Device::create_shader_module, label = 'shader.wgsl'
+//
+//    Shader validation error: Entry point main at Compute is invalid
+//       ┌─ shader.wgsl:43:47
+//       │
+//    43 │         value_that_gets_assigned_wrong_type = v_indices[0];
+//       │                                               ^^^^^^^^^^^^ naga::Expression [13]
+//       │
+//       = The type of [13] doesn't match the type stored in [10]
+//
+//
+//          Entry point main at Compute is invalid
+//            The type of [13] doesn't match the type stored in [10]
+//
+//    It is however unclear what [10] is, since it is never defined in the message.
+
+
+    // Uncomment the following to see the bug [2]
+//    var value_that_gets_assigned_wrong_type: array<u32, 16>;
+//    var wrong_type: array<u32, 8>;
+//    value_that_gets_assigned_wrong_type = wrong_type;
+
+//    This shows the following error:
+//    thread 'main' panicked at wgpu/src/backend/wgpu_core.rs:1009:30:
+//    wgpu error: Validation Error
+//
+//    Caused by:
+//      In Device::create_shader_module, label = 'shader.wgsl'
+//
+//    Shader validation error: Entry point main at Compute is invalid
+//     = The type of [11] doesn't match the type stored in [9]
+//
+//
+//          Entry point main at Compute is invalid
+//            The type of [11] doesn't match the type stored in [9]
+//
+//    In this case, it is unclear what both [9] and [11] are, since it is never defined in the error.
 }
