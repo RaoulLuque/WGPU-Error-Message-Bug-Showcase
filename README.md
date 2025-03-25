@@ -1,3 +1,6 @@
+# This Repository is just used as a reference for an issue in WGPU
+This repository is just used as a reference in an [issue](https://github.com/gfx-rs/wgpu/issues/7419) on a bug in the error messages in the WGPU rust library. The actual WGPU library is found [here](https://github.com/gfx-rs/wgpu).
+
 <img align="right" width="25%" src="logo.png">
 
 # wgpu
